@@ -19,17 +19,18 @@ ADMINS = (
 LOGIN_URL = '/openid/staff_login/'
 LOGIN_REDIRECT_URL = '/'
 OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sa_db_access_log',                      # Or path to database file if using sqlite3.
-        'USER': 'sa_dumper',                      # Not used with sqlite3.
-        'PASSWORD': 'oGcyBs3XjvKh5l8jsjfZ',                  # Not used with sqlite3.
-        'HOST': '10.10.50.161',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '6606',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'misc',                      # Or path to database file if using sqlite3.
+        'USER': 'admin',                      # Not used with sqlite3.
+        'PASSWORD': '123456',                  # Not used with sqlite3.
+        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -118,7 +119,7 @@ ROOT_URLCONF = 'mysite.urls'
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'mytemplates2'),
+    os.path.join(PROJECT_PATH, 'mytemplates'),
 )
 
 INSTALLED_APPS = (

@@ -1,7 +1,6 @@
 # Create your views here.
 import sys
-sys.path.append("/root/db_access_list")
-from db import db
+from common.db import db
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render, get_object_or_404,render_to_response
@@ -9,7 +8,7 @@ from django.template import RequestContext
 import json
 import time
 #from django.contrib.auth.decorators import login_required
-import memcache
+#import memcache
 import json
 import base64
 import json
