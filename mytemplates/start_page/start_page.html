@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
@@ -5,6 +6,8 @@
 </head>
 
 <body>
+
+<img src="{% static "image/icon.png" %}" alt="My image"/>
 
 <a href='/notify_configure_app/view_existing'><h1>Notification management</h1></a><br>
 </body>

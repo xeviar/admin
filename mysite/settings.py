@@ -20,6 +20,9 @@ LOGIN_URL = '/openid/staff_login/'
 LOGIN_REDIRECT_URL = '/'
 OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+STATIC_URL = '/static/'
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 MANAGERS = ADMINS
 
@@ -169,3 +172,7 @@ LOGGING = {
         },
     }
 }
+
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_PATH, "static"),
+)
