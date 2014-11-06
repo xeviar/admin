@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Transitional//EN 
+http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd> 
+<html xmlns:article> 
+<head>
+    <title>SMS Stats</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="javascript/dispaly_sms_stats.js"></script>
+<script type="text/javascript">
+
+
+//var interval_list = new Array()
+//var gateway_list = new Array()
+
+var dict = {
+"interval" : new Array(),
+"gatewayy" : new Array(),
+"sourceee" : new Array(),
+"receiver" : new Array(),
+"statusss" : new Array(),
+"delivery" : new Array(),
+}
+
+
+function count_obj(obj)
+{
+    var count = 0
+    for(var i in obj) 
+    {
+        count ++
+    }
+    return count
+}
+
+function cloneObject(obj) {                                                                                                                                               
+        var clone = {};                                                                                                                                                   
+        for(var i in obj) {                                                                                                                                               
+            if(typeof(obj[i])=="object")                                                                                                                                  
+                clone[i] = cloneObject(obj[i]);                                                                                                                           
+            else                                                                                                                                                          
+                clone[i] = obj[i];                                                                                                                                        
+        }
+        return clone;                                                                                                                                                     
+    }
+
+function get_combine_from_dict_array(dict)
+{
+    console.log("rec input", dict, Object.keys(dict).length)
+    if (Object.keys(dict).length == 1)
+    {
+        var result_array = new Array()
+        for (var i1 in dict)
+        {
+            result_array.push(dict[i1])
+        }
+        console.log("rec last round", dict[ Object.keys(dict)[0] ], dict[ Object.keys(dict)[0] ].length)
+        return dict[ Object.keys(dict)[0] ]
+    }
+    else
+    {
+        var result_array = new Array()
+        temp_array_1 = cloneObject(dict[ Object.keys(dict)[0] ])
+        //console.log("before_delete", temp_array_1)
+        delete dict[ Object.keys(dict)[0] ]
+        console.log("stay here", temp_array_1)
+        temp_array_2 = get_combine_from_dict_array(dict)
+        console.log("rec back 1 :", temp_array_1, count_obj(temp_array_1))
+        console.log("rec back 2 :", temp_array_2, count_obj(temp_array_2))
+        for (var i1 in temp_array_1)
+        {
+            for (var i2 in temp_array_2)
+            {
+                console.log(i1, i2, temp_array_1[i1] + ";" + temp_array_2[i2])
+                result_array.push( temp_array_1[i1] + ";" + temp_array_2[i2] )
+            }
+        }
+        console.log("rec back", result_array)
+        return result_array
+    }
+
+}
+
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+}
+
+function draw_chart_in_dialog(obj){
+    $( "#dialog" ).dialog({ width: 800 , height: 400 })
+    document.getElementById("large_pic").innerHTML = ""
+    document.getElementById("large_pic").style.display = ''
+    data_input = jQuery.parseJSON(obj.getAttribute('data'))
+    var data = google.visualization.arrayToDataTable(data_input[0])
+    var options = {title: data_input[1] + " gateway past " + data_input[2] + " days"};
+    var chart = new google.visualization.LineChart(document.getElementById("large_pic"));
+    chart.draw(data, options);
+}
+
+function drawChart_test(data_input) {
+                                  obj = document.getElementById('content_1')
+                                  obj.innerHTML = ""
+                                  obj = document.getElementById('content_7')
+                                  obj.innerHTML = ""
+                                  obj = document.getElementById('content_30')
+                                  obj.innerHTML = ""
+                                  for (i=0; i < data_input.length; i++)
+                                      {
+                                      obj = document.getElementById('content_' + data_input[i][2])
+                                      var data = google.visualization.arrayToDataTable(data_input[i][0])
+                                      var options = {title: data_input[i][1] + " gateway past " + data_input[i][2] + " days"};
+                                      random_id = makeid()
+                                      obj.innerHTML += "<div id=" + random_id + " onclick=draw_chart_in_dialog(this)></div>"
+                                      var chart = new google.visualization.LineChart(document.getElementById(random_id));
+                                      chart.draw(data, options);
+                                      //document.getElementById(random_id).data = window.btoa(JSON.stringify(data_input[i]))
+                                      document.getElementById(random_id).setAttribute('data',JSON.stringify(data_input[i]) )
+                                      }
+                                  }
+$(document).ready(function() 
+{
+    console.log("Load finished")
+        $("p").click(function(){
+            $(this).hide();
+            });
+
+        $("input").click(function(){
+            //$( "#dialog" ).dialog();
+            var id = $(this).attr('id')
+            var checked = $(this).is(':checked')
+            id_tag = id.substr(0,8)
+            id_data = id.substr(9)
+            console.log(id_tag, id_data, checked)
+                if ( checked == true && $.inArray(id_data,dict[id_tag]) == -1){
+                   dict[id_tag].push(id_data)
+                }
+                if ( checked == false && $.inArray(id_data,dict[id_tag]) != -1){
+                   var index = $.inArray(id_data, dict[id_tag]);
+                   dict[id_tag].splice(index,1)
+                }
+
+        });
+
+        $("#button_draw").click(function(){
+        console.log("button clicked")
+        to_draw = true
+                for (i = 0; i< Object.keys(dict).length; i++){
+                    if (dict[Object.keys(dict)[i]].length == 0)
+                        to_draw = false
+                }
+                if (to_draw == true){
+                    $.get("sms_stats_get_pict" ,
+                          {json_string : JSON.stringify(dict)},
+                          function (data, textStatus){
+                              //console.log(data, textStatus)
+                              //google.load("visualization", "1", {packages:["corechart"]});
+                              data_parsed = jQuery.parseJSON( data )
+                              google.setOnLoadCallback(drawChart_test(data_parsed))}
+                          )
+                 }
+
+        });
+
+});
+///////////////////////
+      google.load("visualization", "1", {packages:["corechart"]});                                                                                                        
+//      google.setOnLoadCallback(drawChart);                                                                                                                                
+//      function drawChart() {                                                                                                                                              
+//        var data = google.visualization.arrayToDataTable([                                                                                                                
+//          ['Year', 'Sales', 'Expenses','test'],                                                                                                                           
+//          ['2004-01',  1000,      400, 0],                                                                                                                                
+//          ['2005',  1170,      460,1000],                                                                                                                                 
+//          ['2006',  660,       1120,2],                                                                                                                                   
+//          ['2007',  1030,      540,0]                                                                                                                                     
+//        ]);                                                                                                                                                               
+//                                                                                                                                                                          
+//        var options = {                                                                                                                                                   
+//          title: 'Gateway: INTL'                                                                                                                                          
+//        };                                                                                                                                                                
+//                                                                                                                                                                          
+//        var chart = new google.visualization.LineChart(document.getElementById('content_7'));                                                                             
+//        chart.draw(data, options);                                                                                                                                        
+//        console.log("test draw finished")
+//     }                
+
+</script>         
+
+</head>
+<body>
+<div id="container" style="width:100%">
+
+    <div id="header" style="background-color:#FFA500;">
+        <h1 style="margin-bottom:0;">SMS Stats</h1>
+    </div>
+
+    <div id="menu" style="background-color:#FFD700;height:200%;width:16%;float:left;">
+        <form>
+            <input type=button id=button_draw value="Draw!" style="width:100%;height:30px">
+            <fieldset style="background-color:00FFCC" id=fieldset_interval>
+               <legend>Interval</legend>
+               <input type="checkbox" id=interval_1>1 Day</input><br>
+               <input type="checkbox" id=interval_7>7 Day</input><br>
+               <input type="checkbox" id=interval_30>1 Month</input><br>
+           </fieldset>
+
+           <fieldset style="background-color:19FFD1" id=fieldset_gateway>
+               <legend>Gateway</legend>
+               <input type="checkbox" id=gatewayy_all>All Gateway</input><br>
+               <hr>
+               {% for item in gateway_list %}
+               <input type="checkbox" id=gatewayy_{{item}}>{{item}}</input><br>
+               {% endfor %}
+    
+           </fieldset>
+           <fieldset style="background-color:33FFD6" id=fieldset_source>
+               <legend>SMS Source</legend>
+               <input type="checkbox" id=sourceee_all>All Combined</input><br>
+               <hr>
+               {% for item in source_list %}
+               <input type="checkbox" id=sourceee_{{item.0}}>{{item.0}}<br>valid for: {{item.1}}</input><br>
+               {% endfor %}
+    
+           </fieldset>
+
+           <fieldset style="background-color:4DFFDB" id=fieldset_receiver_country_code>
+               <legend>SMS Receiving Country Code</legend>
+               <input type="checkbox" id=receiver_all>All Combined</input><br>
+               <hr>
+
+           </fieldset>
+           <fieldset style="background-color:66FFE0" id=fieldset_status>
+               <legend>Status</legend>
+               <input type="checkbox" id=statusss_all>All Combined</input><br>
+               <hr>
+               {% for item in status_list %}
+               <input type="checkbox" id=statusss_{{item.0}}>{{item.0}}<br>valid for: {{item.1}}</input><br>
+               {% endfor %}
+
+           </fieldset>
+           <fieldset style="background-color:80FFE6" id=fieldset_delivery>
+               <legend>Delivery</legend>
+               <input type="checkbox" id=delivery_all>All Combined</input><br>
+               <hr>
+               {% for item in delivery_list %}
+               <input type="checkbox" id=delivery_{{item.0}}>{{item.0}}<br>valid for: {{item.1}}</input><br>
+               {% endfor %}
+
+           </fieldset>
+        </form>
+    </div>
+
+    <div id="content_1" style="background-color:#EEEEEE;height:200%;width:28%;float:left;">
+        Content left goes here
+    </div>
+    <div id="content_7" style="background-color:#FEEEEE;height:200%;width:28%;float:left;">
+        Content middle goes here                                                                                                                                                                                           
+    </div> 
+    <div id="content_30" style="background-color:#EEEEFE;height:200%;width:28%;float:left;">
+        Content right goes here                                                                                                                                                                                           
+    </div>       
+    <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;">
+        SA Team
+    </div>
+
+</div>
+
+<div id="dialog" title="Basic dialog"  >
+<p id=large_pic></p>
+</div>
+
+</body>                                                                                                                                                                                                                   
+</html>

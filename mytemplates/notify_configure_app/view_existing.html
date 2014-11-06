@@ -1,0 +1,37 @@
+{% load get_dict_value_by_key_name %}
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    <title>notify management</title>
+</head>
+
+<body>
+
+    <h1>{{notice}}</h1>
+    <a href="view_existing?type=new">add new</a><br>
+    <table border=5>
+        <tr>
+            {% for item in display_keys %}
+            <th>{{item}}</th>
+            {% endfor %}
+        </tr>
+
+        {% for item in display_items %}
+        <tr>
+            {% for display_key in display_keys %}
+            <td>
+                {% if display_key == "type" %}
+                    <a href="view_existing?type={{item|key:display_key}}">
+                        {{item|key:display_key}}
+                    </a>
+                {% else %}
+                    {{item|key:display_key}}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </td>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

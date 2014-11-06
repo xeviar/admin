@@ -1,0 +1,202 @@
+{% load get_dict_value_by_key_name %}
+<style type = "text/css">
+h2 {color: red}
+</style>
+<html>
+<head>
+</head>
+<body>
+<script type="text/javascript">
+  var d=new Date()
+  var hour = d.getHours()
+  if (hour < 12)
+    {document.write("<b>Good Moring!</b><br>")}
+  else
+    {document.write("<b>Good Afternoon!</b><br>")}
+
+  function function_by_id(obj)
+  {
+    console.log(obj.id)
+    if (obj.id.substr(0,31) == "column_corresponding_dict_name_")
+        {
+           obj.onclick = ""
+           column_id = obj.id.substr(31)
+           console.log("column_id",column_id)
+
+           var xmlhttp;
+           xmlhttp=new XMLHttpRequest();
+           xmlhttp.onreadystatechange=function()
+           {
+              if (xmlhttp.readyState==4 && xmlhttp.status==200)
+              {
+                  obj.innerHTML = '<select onchange=select_dict(this) id=select_dict_' + column_id +'>' +
+                  xmlhttp.responseText +
+                  '</select>'
+              }
+              //else
+              //{
+              //    alert("Something wrong happened! Try again later")
+              //}
+           }
+           xmlhttp.open("GET","/db_survey/ajax_get_column_dictionary?"+"column_id="+column_id,true);
+           xmlhttp.send();
+        }
+    
+  }
+
+  function select_dict(obj)
+  {
+    var dict_choice = obj.options[obj.selectedIndex].text
+    column_id = obj.id.substr(12)
+    console.log("select_dict", column_id,dict_choice)
+    if (dict_choice =='Add_New')
+    {
+        var dict_name = prompt("Please enter the name of the dict")
+        if (dict_name != null && dict_name != "")
+        {
+            console.log(dict_name)
+            set_column_dictionary(column_id, dict_name)
+            obj.parentNode.innerHTML = dict_name
+            //obj.onclick=function(){function_by_id(this)}
+        }
+        else
+        {
+            obj.parentNode.innerHTML = ""
+        }
+        
+    }
+    if (dict_choice =='None')
+    {
+        set_column_dictionary(column_id, '')
+        obj.parentNode.innerHTML = ""
+    }
+    if (dict_choice == '----------')
+    {
+    }
+
+    if (dict_choice != '----------' && dict_choice !='None' && dict_choice !='Add_New')
+    {
+        set_column_dictionary(column_id, dict_choice)
+        obj.parentNode.innerHTML = dict_choice
+    }
+
+  }
+
+  function set_column_dictionary(column_id, dict_name)
+  {
+      console.log("set_column_dictionary", column_id, dict_name)
+
+      var xmlhttp;
+      xmlhttp=new XMLHttpRequest();
+      xmlhttp.onreadystatechange=function()
+      {
+         if (xmlhttp.readyState==4 && xmlhttp.status==200)
+         {
+         }
+         //else
+         //{
+         //    alert("Something wrong happened! Try again later")
+         //}
+      }
+      xmlhttp.open("POST","/db_survey/ajax_set_column_dictionary",true);
+      xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      xmlhttp.send("column_id="+column_id + "&dict_name="+dict_name);
+  
+  
+  }
+
+    function title_func_by_id(obj)
+    {
+        console.log(obj.id)
+        display_key = obj.id.substring(0,obj.id.length - 6)
+        console.log(obj.id.length - 6 ,display_key)
+        obj.style.display = 'none'
+
+        var x=document.getElementsByTagName("td");
+        for (i=0; i< x.length; i++)
+        {
+            if (x[i].id.indexOf(display_key) != -1)
+            {
+                x[i].style.display = 'none'
+            }
+        }
+        document.getElementById("title_select").innerHTML += "<option value=\"" + display_key + "\">" + display_key + "</option>"
+    }
+
+    function title_func(obj)
+    {
+        var display_key = obj.options[obj.selectedIndex].text
+        document.getElementById(display_key + "_title").style.display = ''
+        var x=document.getElementsByTagName("td");
+        for (i=0; i< x.length; i++)
+        {
+            if (x[i].id.indexOf(display_key+"_") != -1)
+            {   
+                console.log(x[i].id , "hide")
+                x[i].style.display = ''
+            }
+        }
+        obj.remove(obj.selectedIndex)
+    }
+
+document.addEventListener('DOMContentLoaded', set_default_hide , false);
+
+    function set_default_hide()
+    {
+        var hide_display_key_array = ["db_def", "schema_def", "table_def" , 'table_key_def',"column_allow_null", "column_default_value","column_def"]
+        console.log(hide_display_key_array.length)
+        for (p=0; p < hide_display_key_array.length; p++)
+        {
+            console.log(hide_display_key_array[p] + "_title")
+            var obj = document.getElementById(hide_display_key_array[p] + "_title")
+            window.title_func_by_id(obj)
+        }
+    }
+
+</script>
+<p><a href="?">Get back to the cluster list</a></p>
+{% if not display_items %}
+  <p>No display_items</p>
+{% endif %}
+{% if not display_keys %}
+  <p>No display_keys</p>
+{% endif %}
+
+
+<h3> Select Extra info </h3>
+<select name="title_list" id=title_select style="width: 400px" onclick=title_func(this)>
+    <option value=----------->----------</option>
+</select>
+
+{% if display_items and display_keys %}
+  <h2>DB Cluster Detail</h2>
+  <table border="5">
+      <colgroup>
+        <col span="2" style="background-color:rgb(108,186,249)">
+        <col span="2" style="background-color:rgb(133,198,250)">
+        <col span="4" style="background-color:rgb(168,214,251)">
+        <col span="7" style="background-color:rgb(196,227,253)">
+      </colgroup>
+  <tr>
+  {% for item in display_keys %}
+    <th id={{item}}_title onclick="title_func_by_id(this)">{{item}}</th>
+  {% endfor %}
+  </tr>
+  {% for display_item in display_items %}
+    <tr>
+    {% for display_key in display_keys %}
+      {% if display_item|key:display_key != 'KEY_TOBE_IGNORED' %}
+        {% if display_item|key:display_key %}
+          <td align="center" valign="top" rowspan = "{{display_item|row_span_of_key:display_key}}" id = {{display_item|id_of_key:display_key}} onclick="function_by_id(this)">{{display_item|key:display_key|safe}}</td>
+        {% else %}
+          <td align="center" valign="top" rowspan = "{{display_item|row_span_of_key:display_key}}" id = {{display_item|id_of_key:display_key}} onclick="function_by_id(this)">&nbsp;</td>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </table>
+{% endif %}
+</body>
+</html>
+

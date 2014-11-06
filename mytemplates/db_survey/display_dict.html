@@ -1,0 +1,192 @@
+{% load get_dict_value_by_key_name %}
+<style type = "text/css">
+h2 {color: red}
+</style>
+<html>
+<head>
+<link href="/media/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"></link>
+</head>
+<body>
+<script type="text/javascript">
+
+  function function_by_id(obj)
+  {
+    console.log(obj.id)
+    if (obj.id.substring(0,12) == "dict_explain")
+        {
+          entry_id = obj.id.substring(13)
+          console.log(entry_id)
+          var explain = prompt("Please enter the explain of the entry \"" + document.getElementById("dict_dict_entry_" + entry_id ).innerHTML + "\"")
+          if (explain != null && explain != "")
+          {
+              var xmlhttp;
+              xmlhttp=new XMLHttpRequest();
+              xmlhttp.onreadystatechange=function()
+              {
+                 if (xmlhttp.readyState==4 && xmlhttp.status==200)
+                 {
+                     document.getElementById("dict_explain_" + entry_id).innerHTML = xmlhttp.responseText
+                 }
+                 //else
+                 //{
+                 //    alert("Something wrong happened! Try again later")
+                 //}
+              }
+              xmlhttp.open("POST","/db_survey/ajax_set_dict_explain",true);
+              xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+              xmlhttp.send("entry_id="+ entry_id + "&explain=" + explain);
+          }
+
+        }
+
+  }
+
+<!--
+//window.onload   =   update_table_column_list()
+//document.addEventListener('DOMContentLoaded', update_table_column_list(), false);
+
+id_array          = new Array()//id array of objects
+column_name_array = new Array()//table name array, for select
+column_count_array  = new Array()//correspoding to id
+
+function update_table_column_list()
+    {
+          //console.log("hello")
+          var x=document.getElementsByTagName("td");
+          console.log(x.length);
+          for (i = 0; i < x.length; i++)
+              {
+                  obj = x[i]
+                  id = obj.id
+                  if (id.indexOf("seen_in_table") != -1)
+                      {
+                      id_array.push(obj.id)
+                      //console.log(id, obj.innerHTML)
+                      var seen_in_table_array = obj.innerHTML.split(";")
+                      //console.log(obj.innerHTML)
+                      //console.log(obj.innerHTML.split(";"))
+                      //console.log(seen_in_table_array)
+                      var local_column_count_array = new Array()
+                      for (j =0; j < seen_in_table_array.length; j++)
+                          {
+                              if (seen_in_table_array[j] != "")
+                                  {
+                                      split_array = seen_in_table_array[j].split(":")
+                                      var column = split_array[0]
+                                      var count  = split_array[1]
+                                      
+                                      local_column_count_array.push([column,count])
+                                      if (column_name_array.indexOf(column) == -1)
+                                          {
+                                              column_name_array.push(column)
+                                          }
+                                      
+                                      console.log(obj.id,column,count)
+                                  }
+                          }
+                      column_count_array.push(local_column_count_array)
+                      }
+              }
+          console.log(id_array)
+          console.log(column_count_array)
+          console.log(column_name_array )
+    //pad the select 
+    select_obj = document.getElementById("column_select")
+    var select_string = ""
+    select_string = "<option value=---------->-----Pls choice-----</option>"
+    for (i = 0; i < column_name_array.length; i++)
+        {
+            select_string += "<option value=\"" + column_name_array[i] + "\">" + column_name_array[i] + "</option>"
+            console.log(column_name_array[i])
+            console.log( select_string )
+        }
+    select_obj.innerHTML = select_string
+
+    }
+document.addEventListener('DOMContentLoaded', update_table_column_list, false);
+//setInterval(update_table_column_list, 300);
+
+function select_column(obj)
+{
+    //console.log('-------------')
+    var column_name = obj.options[obj.selectedIndex].text
+    for (i=0; i< id_array.length; i++)
+    {
+        id = id_array[i]
+        var content_set = false
+        for (j=0; j<column_count_array[i].length;j++)
+        {
+            //console.log(column_count_array[i][j][0])
+            //console.log(column_name)
+            if (column_count_array[i][j][0] == column_name)
+            {
+                document.getElementById(id).innerHTML = column_count_array[i][j][1]
+                //console.log(id, document.getElementById(id).innerHTML)
+                content_set = true
+            }
+        }
+        if (content_set == false) {document.getElementById(id).innerHTML = ""}
+        //console.log(id, document.getElementById(id).innerHTML)
+    }
+
+}
+
+function select_dict(obj)
+{
+    var dict_name = obj.options[obj.selectedIndex].text
+    window.location.href = "?dict_name=" + btoa(dict_name);
+}
+
+//-->
+
+</script>
+<p><a href="/db_survey/display_cluster_list/?">Get back to the cluster list</a></p>
+
+
+<h2>Select Dictionary</h2>
+<select name="dict_list" id=dict_select onchange=select_dict(this) style="width: 400px">                                                                                                                            
+{% for item in dict_name_list %}
+  <option value={{item}}>{{item}}</option>
+{% endfor %}
+</select>
+
+
+{% if display_items and display_keys %}                                                                                                                                                                                   
+  <h2>Dictionary Detail</h2>      
+
+  <h3>Select Column</h3>
+
+  <select name="column_list" id=column_select onchange=select_column(this) style="width: 400px">
+  </select>
+
+
+  <table border="5">
+      <colgroup>
+        <col span="2" style="background-color:rgb(0,186,249)">
+        <col span="2" style="background-color:rgb(0,198,250)">
+        <col span="4" style="background-color:rgb(0,214,251)">
+        <col span="7" style="background-color:rgb(0,227,253)">
+      </colgroup>
+  <tr>
+  {% for item in display_keys %}
+    <th id={{item}}_title onclick="title_func_by_id(this)">{{item}}</th>
+  {% endfor %}
+  </tr>
+  {% for display_item in display_items %}
+    <tr>
+    {% for display_key in display_keys %}
+      {% if display_item|key:display_key != 'KEY_TOBE_IGNORED' %}
+        {% if display_item|key:display_key %}
+          <td align="center" valign="top" rowspan = "{{display_item|row_span_of_key:display_key}}" id = {{display_item|id_of_key:display_key}} onclick="function_by_id(this)">{{display_item|key:display_key|safe}}</td>
+        {% else %}
+          <td align="center" valign="top" rowspan = "{{display_item|row_span_of_key:display_key}}" id = {{display_item|id_of_key:display_key}} onclick="function_by_id(this)">&nbsp;</td>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </table>
+{% endif %}
+</body>
+</html>
+
