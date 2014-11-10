@@ -1,0 +1,150 @@
+html, body {
+	font-family:arial,helvetica,sans-serif;
+	font-size:12px;
+	width:100%;
+	height:100%;
+	padding:0px;
+	margin:0px;
+	background-color:white;
+}
+#wrapper {
+	width:100%;
+	height:100%;
+	border:0px solid #bbb;
+	padding:0px;
+}
+#header {
+	border:02014-11-10px solid #bbb;
+	height:12014-11-100px;
+	padding:30px;
+}
+#content {
+  margin-left: 200px;
+}
+#content div {
+	padding:10px;
+	border:1px solid #bbb;
+	float:left;
+}
+#content-left {
+	float:left;
+	width:180px;
+	margin-left: -200px;
+    background-color: #FFA;
+	height:100%;
+}
+#content-main {
+	float:right;
+	height:100%;
+	background-color: #CCF;
+}
+
+#content-box1, #content-box2, #content-box3 {
+	padding:10px;
+	border:1px solid #bbb;
+	position:absolute;
+	margin-top:190px;
+	height:120px;
+}
+
+#content-box1 {
+	margin-left:212px;
+	width:200px;
+}
+#content-box2 {
+	margin-left:444px;
+	width:200px;
+}
+#content-box3 {
+	margin-left:676px;
+	width:202px;
+}
+#footer {
+	float:left;
+	margin-top:10px;
+	margin-bottom:10px;
+	padding:10px;
+	border:1px solid #bbb;
+	width:878px;
+}
+#bottom {
+	height:5%;
+	clear:both;
+	text-align:right;
+}
+#cleared {
+  clear: both;
+}
+
+.sidebardiv {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	position: absolute;
+	left: 0px;
+	width: 175px;
+	height: 100%;
+	overflow-x:hidden;
+	overflow-y:auto;
+	border-top: 0px;
+	border-style: inset;
+	border-width: 2px 2px 1px 1px;
+}
+
+.topbar {
+	width:100%;
+	position:absolute;
+	top:0px;
+	height: 15px;
+	left:0px;
+	background: rgb(10%, 30%, 68%);
+	vertical-align: middle;
+	text-align: right;
+	color: white;
+}
+
+.searchbar {
+	position:absolute;
+	background: #d1e3ff;
+	height: 22px;
+	padding-left: 2px;
+	padding-right: 2px;
+	vertical-align: middle;
+	display: none;
+}
+
+.statusbar{
+	position:absolute;
+	bottom:0px;
+	height: 15px;
+	width:100%;
+	background: #d1e3ff;
+	padding:3px 0px 1px 0px;
+}
+
+.sidebardiv {
+	float:left;
+	top: 15px;
+	position: absolute;
+	left: 0px;
+	width: 15%;
+	height: 500px;
+	border-style: inset;
+	border-width: 0px 2px 1px 1px;
+}
+.summary {
+	float:right;
+	top: 15px;
+	padding-bottom: 0px;
+	width:85%;
+}
+
+.mainmenu {
+	position:absolute;
+	top:0;
+	left:1;
+	display:t
+}
+
+.vsplitter {
+	width: 3px;
+}
