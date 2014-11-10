@@ -6,6 +6,7 @@ html, body {
 	padding:0px;
 	margin:0px;
 	background-color:white;
+	font-family: Verdana, Sans-serif, Arial;
 }
 #wrapper {
 	width:100%;
@@ -76,20 +77,6 @@ html, body {
   clear: both;
 }
 
-.sidebardiv {
-	padding-top: 0px;
-	padding-bottom: 0px;
-	position: absolute;
-	left: 0px;
-	width: 175px;
-	height: 100%;
-	overflow-x:hidden;
-	overflow-y:auto;
-	border-top: 0px;
-	border-style: inset;
-	border-width: 2px 2px 1px 1px;
-}
-
 .topbar {
 	width:100%;
 	position:absolute;
@@ -136,6 +123,7 @@ html, body {
 	top: 15px;
 	padding-bottom: 0px;
 	width:85%;
+
 }
 
 .mainmenu {

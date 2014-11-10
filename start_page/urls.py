@@ -7,4 +7,6 @@ from start_page import views
 urlpatterns = patterns('', 
 #url(r'^accounts/profile/$', views.sms_stats),
 url(r'^$', views.start_page),
+url(r'^test/$', views.test),
+url(r'^test/(\w+)/$', views.test),
 )
