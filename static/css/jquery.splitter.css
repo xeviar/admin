@@ -8,17 +8,17 @@
   position: relative;
 }
 .splitter_panel .vsplitter {
-    background-color: grey;
+    background-color: #999966;
     cursor: col-resize;
     z-index:900;
-    width: 4px;
+    width: 3px;
 }
 
 .splitter_panel .hsplitter {
-    background-color: #5F5F5F;
+    background-color: #999966;
     cursor: row-resize;
     z-index: 800;
-    height: 4px;
+    height: 3px;
 }
 .splitter_panel .vsplitter.splitter-invisible,
 .splitter_panel .hsplitter.splitter-invisible {

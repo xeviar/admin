@@ -5,7 +5,7 @@ html, body {
 	height:100%;
 	padding:0px;
 	margin:0px;
-	background-color:white;
+	background-color: white;
 	font-family: Verdana, Sans-serif, Arial;
 }
 #wrapper {
@@ -81,7 +81,7 @@ html, body {
 	width:100%;
 	position:absolute;
 	top:0px;
-	height: 15px;
+	height: 20px;
 	left:0px;
 	background: rgb(10%, 30%, 68%);
 	vertical-align: middle;
@@ -92,7 +92,7 @@ html, body {
 .searchbar {
 	position:absolute;
 	background: #d1e3ff;
-	height: 22px;
+	height: 30px;
 	padding-left: 2px;
 	padding-right: 2px;
 	vertical-align: middle;
@@ -118,6 +118,13 @@ html, body {
 	border-style: inset;
 	border-width: 0px 2px 1px 1px;
 }
+.summaryviw {
+	float:right;
+	top: 15px;
+	padding-bottom: 0px;
+	width:85%;
+}
+
 .summary {
 	float:right;
 	top: 15px;
@@ -133,6 +140,7 @@ html, body {
 	display:t
 }
 
-.vsplitter {
-	width: 3px;
+.tableA {
+		font-size: 13px;
+		font-family: Verdana, Sans-serif, Arial;
 }

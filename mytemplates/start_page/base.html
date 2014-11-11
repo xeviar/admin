@@ -20,10 +20,18 @@
 <script>
 	function resize()
 	{
-	  var h = $(window).height() -30;
+	  var h = $(window).height() -$("#topbar").height() - $("#statusbar").height();
 	  $("#tree").height(h);
 	  $("#summary").height(h);
 	  $('.vsplitter').height(h);
+
+	  var _top= $("#topbar").height();
+
+	  //console.log("css %s", _css);
+	  $("#tree").css("top", _top);
+	  $("#summary").css("top", _top);
+	  $('.vsplitter').css("top", _top);
+	  $('.hsplitter').css("top", 400);
 	}
 
 	$( window ).resize(function() {
@@ -33,7 +41,7 @@
 	$(document).ready(function() {
 		$('#mainviw').split({orientation:'vertical', limit:10, position:"10%"});
 	 	resize();
-
+		$('#test').split({orientation:'horizontal', limit:10, position:"20%"});
 
         $("#browser").treeview({
                 toggle: function() {
@@ -51,14 +59,23 @@
 	<div id="statusbar" class="statusbar">Copyright &copy; 2014 <font style="color:#660099">Garena System Admin</font></div>
 
 	<div id="mainviw">
-	<div id="tree" class="sidebardiv" style="top:20px;">
-		{% block tree %} treeview {%endblock%}
-	</div>
-	<div id="summary" class="summary">
-		{% block summary %} treeview {%endblock%}
+		<div id="tree" class="sidebardiv">
+			{% block tree %} treeview {%endblock%}
+		</div>
 
+		
+			<div id="summary" class="summary">
+				<div id="test" style="width:100%;height:100%">
+					<div id="_summary" style="height:50%">
+						{% block summary %} treeview {%endblock%}
+					</div>
+				
+					<div id="detail" style="height:50%">
+						{% block detail %} treeview {%endblock%}
+					</div>
+				</div>
+			</div>
 	</div>
-</div>
 
     </body>
 </html>
