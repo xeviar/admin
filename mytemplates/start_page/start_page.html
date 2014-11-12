@@ -1,4 +1,5 @@
 {% extends 'start_page/base.html' %}
+{% load range %}
 
 {% block tree %}
 
@@ -39,9 +40,31 @@
 
 {% block summary %}
 		<table class="tableA">
-			<tr><td>1111</td><td>222</td></tr>
-			<tr><td>1111</td><td>222</td></tr>
-			<tr><td>1111</td><td>222</td></tr>
-			<tr><td>1111</td><td>222</td></tr>
+			{% for row in 2|times  %}
+			<tr>
+				{% for col in 3|times  %}
+				<td>
+					<svg x="10" y="0">
+					<g>
+					<rect x="10" width="200" height="150" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+					<text x="30" y="40" font-family="Verdana" font-size="30" fill="black"> Hello {{row}} {{col}}</text>
+					</rect>
+					</g>
+					</svg>
+				</td>
+			    {% endfor %}
+			</tr>
+			
+			{% endfor %}
 		</table>
+{% endblock %}
+
+{% block detail %}
+		<svg x="10" y="0">
+			<g>
+				<rect x="10" width="200" height="150" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+				<text y="30" font-family="Verdana" font-size="30" fill="black" > Hello</text>
+				</rect>
+			</g>
+		</svg>
 {% endblock %}

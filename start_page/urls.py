@@ -1,11 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 #from django.contrib.auth.views import login, logout
 
-#from polls import views
 from start_page import views
 
 urlpatterns = patterns('', 
-#url(r'^accounts/profile/$', views.sms_stats),
+#url('', include('social.apps.django_app.urls', namespace='social')),
 url(r'^$', views.start_page),
 url(r'^test/$', views.test),
 url(r'^test/(\w+)/$', views.test),
