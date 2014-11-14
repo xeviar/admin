@@ -3,3 +3,6 @@ python setup.py install
 
 python manager.py dumpdata >xxx
 python manager.py loaddata xxx
+
+export PYTHONPAH=.
+to make to django-admin.py works
