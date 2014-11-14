@@ -1,70 +1,50 @@
 {% extends 'start_page/base.html' %}
+{% load staticfiles %}
 {% load range %}
 
-{% block tree %}
+{%block script%}
+<script language="javascript" src="{% static "js/main.js" %}"></script>
+{%endblock%}
 
+{% block tree %}
 	<ul id="browser" class="filetree treeview-famfamfam">
-		<li><span class="folder">Folder 1</span>
+		<li><span class="folder">Monitor</span>
 			<ul>
-				<li class="closed"><span class="folder">Item 1.1</span>
-					<ul>
-						<li><span class="file">Item 1.1.1</span></li>
-					</ul>
-				</li>
-				<li class="closed"><span class="folder">Folder 2</span>
-					<ul>
-						<li><span class="folder">Subfolder 2.1</span>
-							<ul id="folder21">
-								<li><span class="file">File 2.1.1</span></li>
-								<li><span class="file">File 2.1.2</span></li>
-							</ul>
-						</li>
-						<li><span class="folder">Subfolder 2.2</span>
-							<ul>
-								<li><span class="file">File 2.2.1</span></li>
-								<li><span class="file">File 2.2.2</span></li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li class="closed"><span class="folder">Folder 3 (closed at start)</span>
-					<ul>
-						<li><span class="file">File 3.1</span></li>
-					</ul>
-				</li>
-				<li><span class="file">File 4</span></li>
+				{% for k in product %}
+				<li><span class="file"><a href="/start_page/product/{{k}}"> {{k}} </a></span></li>
+				{% endfor %}
 			</ul>
 		</li>
 	</ul>
 {% endblock %}
 
 {% block summary %}
+		<br> {{selected_product}}
 		<table class="tableA">
-			{% for row in 2|times  %}
-			<tr>
-				{% for col in 3|times  %}
-				<td>
-					<svg x="10" y="0">
-					<g>
-					<rect x="10" width="200" height="150" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-					<text x="30" y="40" font-family="Verdana" font-size="30" fill="black"> Hello {{row}} {{col}}</text>
-					</rect>
-					</g>
-					</svg>
-				</td>
-			    {% endfor %}
-			</tr>
-			
+			{% for k, v in list.iteritems %}
+				{% if k = selected_product %}
+					{% for kk in v  %}
+					<td>
+						<svg id="id_{{selected_product}}_{{kk}}" x="10" y="0">
+						<g>
+						<rect x="10" width="200" height="150" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+						<text x="30" y="40" font-family="Verdana" font-size="30" fill="black">{{kk}}</text>
+						</rect>
+						</g>
+						</svg>
+
+						<script>
+						$( "#id_{{selected_product}}_{{kk}}" ).click(function() {
+							showDetail($(this));
+						});
+						</script>
+					</td>
+					{% endfor %}
+				{% endif %}
 			{% endfor %}
 		</table>
 {% endblock %}
 
 {% block detail %}
-		<svg x="10" y="0">
-			<g>
-				<rect x="10" width="200" height="150" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
-				<text y="30" font-family="Verdana" font-size="30" fill="black" > Hello</text>
-				</rect>
-			</g>
-		</svg>
+
 {% endblock %}
