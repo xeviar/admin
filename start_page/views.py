@@ -57,7 +57,6 @@ def getdetail(request, v_product, v_item):
 		_proditem = Product_item_tbl.objects.filter(product=_prod.id).filter(item_name=v_item)
 		_set = Item_log_tbl.objects.filter(item=_proditem[0].id)
 
-		#print _set.len()
 		for v in _set:
 			_retlist.append(v.tojson())
 
