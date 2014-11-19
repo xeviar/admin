@@ -30,11 +30,9 @@
 
 	  var _top= $("#topbar").height();
 
-	  //console.log("css %s", _css);
 	  $("#tree").css("top", _top);
 	  $("#summary").css("top", _top);
 	  $('.vsplitter').css("top", _top);
-	  //$('.hsplitter').css("top", 400);
 	}
 
 	$( window ).resize(function() {
@@ -58,8 +56,11 @@
 
 	<body>
 
-	<div id="topbar" class="topbar">{{user}}   <span><a href="javascript:getallstatus()"> get </a></span></div>
-	<div id="statusbar" class="statusbar">Copyright &copy; 2014 <font style="color:#660099">Garena System Admin</font></div>
+	<div id="topbar" class="topbar">
+		<span id="sp1"> User:{{user}}</span> &nbsp;&nbsp;&nbsp;<b>
+		<span><a href="/start_page/logout"><font color="white"> LogOut </font></a></span>
+	</div>
+	
 
 	<div id="mainviw">
 		<div id="tree" class="sidebardiv">
@@ -72,12 +73,13 @@
 					{% block summary %} treeview {%endblock%}
 				</div>
 			
-				<div id="detail" style="height:50%">
+				<div id="detail">
 					{% block detail %} treeview {%endblock%}
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<div id="statusbar" class="statusbar">Copyright &copy; 2014 <font style="color:#660099">Garena System Admin</font></div>
 	</body>
 </html>

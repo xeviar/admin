@@ -2,10 +2,12 @@ from django.http import HttpResponse
 from django.template import Context, loader
 from django.shortcuts import render, get_object_or_404,render_to_response
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from conf import taskconf
 import sys
 import testdata
 from start_page.models import *
+import json
 
 _dict = {}
 _model = model_data()
@@ -24,7 +26,6 @@ def start_page(request):
 	return render_to_response('start_page/start_page.html', _dict)
 
 def test(request, var1=""):
-#    return HttpResponse("hello")
 	return render_to_response('start_page/test.html', {"blood": var1})
 
 
@@ -45,3 +46,28 @@ def getstatus(request, v_product, v_item):
 	except:
 		print "Unexpected error:", sys.exc_info()[0]
 		return HttpResponse("1")
+
+
+@login_required
+def getdetail(request, v_product, v_item):
+	try:
+		ret = {'data': []}
+		_retlist = []
+		_prod = Product_tbl.objects.get(product_name=v_product)
+		_proditem = Product_item_tbl.objects.filter(product=_prod.id).filter(item_name=v_item)
+		_set = Item_log_tbl.objects.filter(item=_proditem[0].id)
+
+		#print _set.len()
+		for v in _set:
+			_retlist.append(v.tojson())
+
+		ret['data'] = _retlist
+		print json.dumps(ret)
+		return HttpResponse(json.dumps(ret))
+	except:
+		print "Unexpected error:", sys.exc_info()[0]
+		return HttpResponse("1")
+
+def log_out(request):
+    logout(request)
+    return HttpResponse('succeed!')

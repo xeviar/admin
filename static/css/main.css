@@ -8,74 +8,6 @@ html, body {
 	background-color: white;
 	font-family: Verdana, Sans-serif, Arial;
 }
-#wrapper {
-	width:100%;
-	height:100%;
-	border:0px solid #bbb;
-	padding:0px;
-}
-#header {
-	border:02014-11-10px solid #bbb;
-	height:12014-11-100px;
-	padding:30px;
-}
-#content {
-  margin-left: 200px;
-}
-#content div {
-	padding:10px;
-	border:1px solid #bbb;
-	float:left;
-}
-#content-left {
-	float:left;
-	width:180px;
-	margin-left: -200px;
-    background-color: #FFA;
-	height:100%;
-}
-#content-main {
-	float:right;
-	height:100%;
-	background-color: #CCF;
-}
-
-#content-box1, #content-box2, #content-box3 {
-	padding:10px;
-	border:1px solid #bbb;
-	position:absolute;
-	margin-top:190px;
-	height:120px;
-}
-
-#content-box1 {
-	margin-left:212px;
-	width:200px;
-}
-#content-box2 {
-	margin-left:444px;
-	width:200px;
-}
-#content-box3 {
-	margin-left:676px;
-	width:202px;
-}
-#footer {
-	float:left;
-	margin-top:10px;
-	margin-bottom:10px;
-	padding:10px;
-	border:1px solid #bbb;
-	width:878px;
-}
-#bottom {
-	height:5%;
-	clear:both;
-	text-align:right;
-}
-#cleared {
-  clear: both;
-}
 
 .topbar {
 	width:100%;
@@ -102,10 +34,10 @@ html, body {
 .statusbar{
 	position:absolute;
 	bottom:0px;
-	height: 15px;
+	height: 20px;
 	width:100%;
 	background: #d1e3ff;
-	padding:3px 0px 1px 0px;
+	padding:0px 0px 0px 0px;
 }
 
 .sidebardiv {
@@ -137,10 +69,53 @@ html, body {
 	position:absolute;
 	top:0;
 	left:1;
-	display:t
 }
 
 .tableA {
 		font-size: 13px;
 		font-family: Verdana, Sans-serif, Arial;
+}
+
+.data
+{
+        color: #000;
+        width: 100%;
+        border-top: 0px;
+        border-bottom: 1px #aaa solid;
+        border-left: 1px #aaa solid;
+        border-right: 1px #aaa solid;
+        border-collapse: collapse;
+        border-spacing: 0px;
+        padding: 0px;
+}
+
+.data tr
+{
+        color: #222;
+}
+
+.data tr td
+{
+        padding: 0px 2px 0px 2px;
+}
+
+
+.data tr.headerA td
+{
+        font-weight:bold;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        position:relative;
+        border: 1px solid;
+        border-color: threedhighlight threedshadow threedshadow threedhighlight;
+}
+
+
+.data tr.row td
+{
+        border-right: 1px solid #DDDDDD;
+        border-bottom: 1px solid #DDDDDD;
+        text-align: left;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 }

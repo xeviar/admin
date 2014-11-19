@@ -27,7 +27,7 @@
 					<td>
 						<svg id="id_{{selected_product}}_{{kk}}" x="10" y="0">
 						<g>
-						<rect x="10" width="200" height="150" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+						<rect x="10" width="200" height="150" style="fill:#5858FA;stroke-width:3;stroke:rgb(0,0,0)" />
 						<text x="30" y="40" font-family="Verdana" font-size="30" fill="black">{{kk}}</text>
 						</rect>
 						</g>
@@ -37,6 +37,8 @@
 						$( "#id_{{selected_product}}_{{kk}}" ).click(function() {
 							showDetail($(this));
 						});
+
+						$( "#id_{{selected_product}}_{{kk}}" ).css('cursor', 'pointer');
 						</script>
 					</td>
 					{% endfor %}
@@ -46,5 +48,5 @@
 {% endblock %}
 
 {% block detail %}
-
+<table class="data tableA"><tr class="headerA"><td>Status</td><td>Description</td><td>Time</td></tr></table>
 {% endblock %}

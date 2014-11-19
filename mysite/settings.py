@@ -140,7 +140,7 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 LOGIN_URL = '/login/google-oauth2/'
-LOGIN_REDIRECT_URL = '/start_page/'
+LOGIN_REDIRECT_URL = '/start_page'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "36338072287-t8nrt086n57lkplc6gt1829b4bdg90uo.apps.googleusercontent.com"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "QD1k7RGYsEbFkWtntvDq70MG"
