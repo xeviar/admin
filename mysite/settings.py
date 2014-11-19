@@ -1,5 +1,6 @@
 import os.path
 
+PRODUCTION = False
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -19,13 +20,26 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 MANAGERS = ADMINS
 
+'''
+if PRODUCTION :
+	DATABASES = {
+        'default': {
+                'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+                'NAME': 'sa_monitor_db',              # Or path to database file if using sqlite3.
+                'USER': 'sa_monitor',                 # Not used with sqlite3.
+                'PASSWORD': 'I2krPdtUy2Kjd3OTklOs',   # Not used with sqlite3.
+                'HOST': '203.116.180.36',             # Set to empty string for localhost. Not used with sqlite3.
+                'PORT': '6606',                       # Set to empty string for default. Not used with sqlite3.
+        }
+	}
+else:'''
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
 		'NAME': 'sa_monitor',                  # Or path to database file if using sqlite3.
 		'USER': 'admin',                      # Not used with sqlite3.
 		'PASSWORD': '123456',                 # Not used with sqlite3.
-		'HOST': '127.0.0.1',                  # Set to empty string for localhost. Not used with sqlite3.
+		'HOST': 'localhost',                  # Set to empty string for localhost. Not used with sqlite3.
 		'PORT': '3306',                       # Set to empty string for default. Not used with sqlite3.
 	}
 }

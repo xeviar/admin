@@ -7,6 +7,7 @@ STATUS = (
 	('3', 'CRITICAL'),
 )
 
+
 class Product_tbl(models.Model):
 	product_name = models.CharField(max_length=20)
 	
