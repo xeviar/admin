@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from conf import taskconf
 import sys
-import testdata
+#import testdata
 from start_page.models import *
 import json
 
