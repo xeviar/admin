@@ -1,6 +1,8 @@
 git clone git://github.com/omab/django-social-auth.git
 python setup.py install
 
+pip install Django==1.7.1
+
 python manager.py dumpdata >xxx
 python manager.py loaddata xxx
 
