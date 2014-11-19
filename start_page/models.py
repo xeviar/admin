@@ -10,6 +10,8 @@ STATUS = (
 class Product_tbl(models.Model):
 	product_name = models.CharField(max_length=20)
 	
+	class Meta:
+		db_table = "Product_tbl"
 	def __unicode__(self):
 		return self.product_name
 
@@ -20,18 +22,31 @@ class Product_item_tbl(models.Model):
 
 	item_status = models.CharField(max_length=1, choices=STATUS, default='1')
 	item_description = models.TextField()
-	update_timstamp = models.IntegerField()
+	update_timstamp = models.DateTimeField(auto_now_add=True, blank=True)
+
+	class Meta:
+		db_table = "Product_item_tbl"
 	def __unicode__(self):
-		return "cccc"
+		return "%s_%s" % (Product_tbl.objects.get(id=self.product_id).product_name, self.item_name)
 
 class Item_log_tbl(models.Model):
 	item = models.ForeignKey(Product_item_tbl)
 
 	item_status = models.CharField(max_length=1, choices=STATUS, default='1')
 	item_description = models.TextField()
-	update_timstamp = models.IntegerField()
+	update_timstamp = models.DateTimeField(auto_now_add=True, blank=True)
+
+	class Meta:
+		db_table = "Item_log_tbl"
+
 	def tojson(self):
-		return '{"status":"%s","desc":"%s","timestamp":%d}' % (_getValue(self.item_status), self.item_description, self.update_timstamp)
+		return '{"status":"%s","desc":"%s","timestamp":"%s"}' % (_getValue(self.item_status), 
+				self.item_description, str(self.update_timstamp))
+
+	def __unicode__(self):
+		_item = Product_item_tbl.objects.get(id=self.item_id)
+		#_prod = Product_tbl.objects.get(id=_item.product_id)
+		return "%s_%s" % (_item, self.item_description)
 
 
 def _getValue(q):

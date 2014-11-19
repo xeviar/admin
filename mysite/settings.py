@@ -9,6 +9,10 @@ ADMINS = (
 	# ('Your Name', 'your_email@example.com'),
 )
 
+ALLOWED_HOSTS = [
+	'sa-monitor.garena.com',
+]
+
 PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
@@ -18,10 +22,10 @@ MANAGERS = ADMINS
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-		'NAME': 'django_db',                  # Or path to database file if using sqlite3.
+		'NAME': 'sa_monitor',                  # Or path to database file if using sqlite3.
 		'USER': 'admin',                      # Not used with sqlite3.
 		'PASSWORD': '123456',                 # Not used with sqlite3.
-		'HOST': 'mysite.com',                  # Set to empty string for localhost. Not used with sqlite3.
+		'HOST': '127.0.0.1',                  # Set to empty string for localhost. Not used with sqlite3.
 		'PORT': '3306',                       # Set to empty string for default. Not used with sqlite3.
 	}
 }
@@ -41,13 +45,13 @@ USE_TZ = True
 
 # URL prefix for static files.
 STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 
 # List of finder classes that know how to find static files in
 # various locations.
 STATICFILES_FINDERS = (
 	'django.contrib.staticfiles.finders.FileSystemFinder',
 	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 STATICFILES_DIRS = (
