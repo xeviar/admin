@@ -1,6 +1,5 @@
 from django.http import HttpResponse
-from django.template import Context, loader
-from django.shortcuts import render, get_object_or_404,render_to_response
+from django.shortcuts import render,render_to_response
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from conf import taskconf
@@ -19,6 +18,9 @@ def init(request):
 	#_dict["list"]          = taskconf.TASKLIST
 	_dict["list"]          = _model.getAllProductItem()
 	_dict["selected_product"] = "IM"
+
+def login_error(request):
+	return HttpResponse('Unauthorized User, Please contact System Admin!!!', status=401)
 
 @login_required
 def start_page(request):

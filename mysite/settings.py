@@ -20,29 +20,28 @@ TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 MANAGERS = ADMINS
 
-'''
 if PRODUCTION :
 	DATABASES = {
-        'default': {
-                'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-                'NAME': 'sa_monitor_db',              # Or path to database file if using sqlite3.
-                'USER': 'sa_monitor',                 # Not used with sqlite3.
-                'PASSWORD': 'I2krPdtUy2Kjd3OTklOs',   # Not used with sqlite3.
-                'HOST': '203.116.180.36',             # Set to empty string for localhost. Not used with sqlite3.
-                'PORT': '6606',                       # Set to empty string for default. Not used with sqlite3.
-        }
+		'default': {
+			'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+			'NAME': 'sa_monitor_db',              # Or path to database file if using sqlite3.
+			'USER': 'sa_monitor',                 # Not used with sqlite3.
+			'PASSWORD': 'I2krPdtUy2Kjd3OTklOs',   # Not used with sqlite3.
+			'HOST': '203.116.180.36',             # Set to empty string for localhost. Not used with sqlite3.
+			'PORT': '6606',                       # Set to empty string for default. Not used with sqlite3.
+		}
 	}
-else:'''
-DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-		'NAME': 'sa_monitor',                  # Or path to database file if using sqlite3.
-		'USER': 'admin',                      # Not used with sqlite3.
-		'PASSWORD': '123456',                 # Not used with sqlite3.
-		'HOST': 'localhost',                  # Set to empty string for localhost. Not used with sqlite3.
-		'PORT': '3306',                       # Set to empty string for default. Not used with sqlite3.
+else:
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+			'NAME': 'sa_monitor',                  # Or path to database file if using sqlite3.
+			'USER': 'admin',                      # Not used with sqlite3.
+			'PASSWORD': '123456',                 # Not used with sqlite3.
+			'HOST': 'localhost',                  # Set to empty string for localhost. Not used with sqlite3.
+			'PORT': '3306',                       # Set to empty string for default. Not used with sqlite3.
+		}
 	}
-}
 
 TIME_ZONE = 'Asia/Singapore'
 
@@ -158,7 +157,8 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 LOGIN_URL = '/login/google-oauth2/'
-LOGIN_REDIRECT_URL = '/start_page'
+LOGIN_REDIRECT_URL = '/start_page/'
+LOGIN_ERROR_URL    = '/start_page/login_error/'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "36338072287-t8nrt086n57lkplc6gt1829b4bdg90uo.apps.googleusercontent.com"
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "QD1k7RGYsEbFkWtntvDq70MG"
