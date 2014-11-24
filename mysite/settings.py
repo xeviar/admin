@@ -58,7 +58,7 @@ USE_TZ = True
 
 # URL prefix for static files.
 STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'static')
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -68,7 +68,7 @@ STATICFILES_FINDERS = (
 )
 
 STATICFILES_DIRS = (
-	os.path.join(PROJECT_PATH, "static"),
+	os.path.join(PROJECT_PATH, "static_dev"),
 )
 
 # Make this unique, and don't share it with anybody.
