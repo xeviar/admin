@@ -8,7 +8,7 @@
 
 {% block tree %}
 	<ul id="browser" class="filetree treeview-famfamfam">
-		<li><span class="folder">Monitor</span>
+		<li><span class="folder"><a href="/start_page/product/showall">Monitor</a></span>
 			<ul>
 				{% for k in product %}
 				<li><span class="file"><a href="/start_page/product/{{k}}"> {{k}} </a></span></li>
@@ -19,32 +19,46 @@
 {% endblock %}
 
 {% block summary %}
-		<br> {{selected_product}}
-		<table class="tableA">
-			{% for k, v in list.iteritems %}
-				{% if k = selected_product %}
-					{% for kk in v  %}
-					<td>
-						<svg id="id_{{selected_product}}_{{kk}}" x="10" y="0">
-						<g>
-						<rect x="10" width="200" height="150" style="fill:#5858FA;stroke-width:3;stroke:rgb(0,0,0)" />
-						<text x="30" y="40" font-family="Verdana" font-size="30" fill="black">{{kk}}</text>
-						</rect>
-						</g>
-						</svg>
+		{% if selected_product == "showall" %}
+			<h2>All Products: </h2>
+			<ul>
+				{% for k, v in list.iteritems %}
+				<li><a href="/start_page/product/{{k}}">{{k}}</li>
+				{% endfor %}
+			</ul>
 
-						<script>
-						$( "#id_{{selected_product}}_{{kk}}" ).click(function() {
-							showDetail($(this));
-						});
+		{% else %}
+			<h2> {{selected_product}} </h2>
+			<br>
+			<table class="tableA">
+				{% for k, v in list.iteritems %}
+					{% if k = selected_product %}
+					<tr>
+						{% for kk in v  %}
+						<td>
+							<svg id="id_{{selected_product}}_{{kk}}" x="10" y="0">
+							<g>
+							<rect x="10" width="200" height="150" style="fill:#5858FA;stroke-width:3;stroke:rgb(0,0,0)" />
+							<text x="30" y="40" font-family="Verdana" font-size="30" fill="black">{{kk}}</text>
+							</rect>
+							</g>
+							</svg>
 
-						$( "#id_{{selected_product}}_{{kk}}" ).css('cursor', 'pointer');
-						</script>
-					</td>
-					{% endfor %}
-				{% endif %}
-			{% endfor %}
-		</table>
+							<script>
+							$( "#id_{{selected_product}}_{{kk}}" ).click(function() {
+								showDetail($(this));
+							});
+
+							$( "#id_{{selected_product}}_{{kk}}" ).css('cursor', 'pointer');
+							</script>
+						</td>
+						{% endfor %}
+					</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
+		{% endif %}
+
 {% endblock %}
 
 {% block detail %}

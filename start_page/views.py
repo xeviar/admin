@@ -7,6 +7,9 @@ import sys
 #import testdata
 from start_page.models import *
 import json
+from django.conf import settings
+import MySQLdb
+import warnings
 
 _dict = {}
 _model = model_data()
@@ -69,6 +72,36 @@ def getdetail(request, v_product, v_item):
 		print "Unexpected error:", sys.exc_info()[0]
 		return HttpResponse("1")
 
+def submit(request):
+	message = ""
+	product = request.POST['product_name']
+	item    = request.POST['item_name']
+	status  = request.POST['status']
+	desc    = request.POST['description']
+
+	_dbhost =  settings.DATABASES['default']['HOST']
+	_dbport =  int(settings.DATABASES['default']['PORT'])
+	_dbuser =  settings.DATABASES['default']['USER']
+	_dbpass =  settings.DATABASES['default']['PASSWORD']
+	_dbname =  settings.DATABASES['default']['NAME']
+
+	try:
+		conn = MySQLdb.connect(host = _dbhost, port = _dbport, user = _dbuser, passwd = _dbpass, db=_dbname)
+
+		cursor = conn.cursor()
+		warnings.filterwarnings("ignore", "No data .*")
+		result = cursor.callproc("add_item_log", (product, item, status, desc, 0))
+		cursor.execute("SELECT @_add_item_log_4")
+		message = cursor.fetchone()
+		cursor.close()
+		conn.close()
+
+		return HttpResponse(message)
+	except:
+		print message		
+		print "Unexpected error:", sys.exc_info()
+		return HttpResponse('submit fail!')
+	
 def log_out(request):
-    logout(request)
-    return HttpResponse('succeed!')
+	logout(request)
+	return HttpResponse('succeed!')

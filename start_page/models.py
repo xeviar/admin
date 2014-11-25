@@ -42,7 +42,7 @@ class Item_log_tbl(models.Model):
 
 	def tojson(self):
 		return '{"status":"%s","desc":"%s","timestamp":"%s"}' % (_getValue(self.item_status), 
-				self.item_description, str(self.update_timstamp))
+				self.item_description, str(self.update_timstamp.strftime('%Y-%m-%d %H:%M:%S')))
 
 	def __unicode__(self):
 		_item = Product_item_tbl.objects.get(id=self.item_id)

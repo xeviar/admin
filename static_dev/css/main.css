@@ -9,6 +9,10 @@ html, body {
 	font-family: Verdana, Sans-serif, Arial;
 }
 
+ul li {
+	font-size:16px;
+}
+
 .topbar {
 	width:100%;
 	position:absolute;

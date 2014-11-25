@@ -11,6 +11,7 @@ url(r'^login_error/$', views.login_error),
 url(r'^product/(\w+)/$', views.product),
 url(r'^getstatus/(\w+)/(\w+)/$', views.getstatus),
 url(r'^getdetail/(\w+)/(\w+)/$', views.getdetail),
+url(r'^submit$', views.submit),
 url(r'^test/$', views.test),
 url(r'^test/(\w+)/$', views.test),
 )
